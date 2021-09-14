@@ -1,4 +1,4 @@
-# Project_Franchise-Guide
+# Project | Franchise-Guide
 
 ## 데이터로 살펴본 외식 프랜차이즈 창업 성공 예측
 
