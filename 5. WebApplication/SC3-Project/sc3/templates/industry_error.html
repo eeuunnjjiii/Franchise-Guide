@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+<h1><p class="text-dark">Search Your Industry</p></h1>
+{% endblock %}
+
+{% block lead %}
+<h4><p class="text-muted">관심 있는 업종을 검색해보세요.</p></h4>
+<p class="m-4 h5 text-warning"> - </p>
+<h5><p class="text-dark">2020년 상위 매출 10개 브랜드 업종별 검색</p></h5>
+<p class="font-weight-light alert-secondary">분류 🔍  한식 / 일식 / 중식 / 분식 / 서양식 / 패스트푸드 / 치킨 / 피자 / 커피 / 음료(커피 외) / 주점 / 아이스크림,빙수 / 제과제빵 / 기타외식 / 기타외국식</p>
+<a href="https://franchise.ftc.go.kr/main/index.do"><p class="text-muted">* 데이터 출처 : 공정거래위원회 가맹사업거래</p></a>
+
+{% endblock %}
+
+{% block main_body %}
+<form method="GET" action="/industry">
+  <input name="industryname" style="margin-bottom:10px" class="form-control" type="text" placeholder="원하는 업종을 입력하세요.">
+  <input type="submit" class="btn btn-warning" value="Search" />
+</form>
+
+<p class="m-5 h3 text-danger">❗️[ERROR]❗️</p>
+<p class="m-5 h3 text-danger">입력한 업종은 정보공개서에서 찾을 수 없습니다.</p>
+
+{% if data_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">업종</th>
+      <th scope="col">브랜드</th>
+      <th scope="col">상호명</th>
+      <th scope="col">가맹점수</th>
+      <th scope="col">평균매출액</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in data_list %}
+    <tr>
+      <th scope="row">{{ user.업종 }}</th>
+      <td>{{ user.브랜드 }}</td>
+      <td>{{ user.상호명 }}</td>
+      <td>{{ user.가맹점수 }}</td>
+      <td>{{ user.평균매출액 }}</td>
+
+      <td>
+        <a class="btn btn-secondary", href='/brand{{ user.브랜드 }}'>
+          ADD
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+  </table>
+{% endif %}
+
+{% endblock %}

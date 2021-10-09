@@ -1,0 +1,71 @@
+{% extends 'basic.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+<h1><p class="text-dark">Search Your Brand</p></h1>
+{% endblock %}
+
+{% block lead %}
+<h4><p class="text-muted">관심 있는 브랜드를 검색해보세요.</p></h4>
+<p class="m-4 h5 text-warning"> - </p>
+<h5><p class="text-dark">2017년-2020년 브랜드 검색</p></h5>
+<p class="font-weight-light alert-secondary">예시 🔍 불닭발땡초동대문엽기떡볶이 -> 엽기떡볶이 ⭕️, 엽기 ⭕️, 엽떡 ❌</p>
+<a href="https://franchise.ftc.go.kr/main/index.do"><p class="text-muted">* 데이터 출처 : 공정거래위원회 가맹사업거래</p></a>
+{% endblock %}
+
+{% block main_body %}
+<form method="GET" action="/brand">
+  <input name="brandname" style="margin-bottom:10px" class="form-control" type="text" placeholder="원하는 브랜드를 입력하세요.">
+  <input type="submit" class="btn btn-warning" value="Search" />
+</form>
+
+<p class="m-5 h3 text-danger">❗️[ERROR]❗️</p>
+{% if link_text %}
+<p class="m-5 h4 text-dark">홈페이지 주소 안내 👉🏻 {{ link_text }} </p>
+{% endif %}
+<p class="m-5 h3 text-danger">입력한 브랜드는 정보공개서에서 찾을 수 없습니다.</p>
+
+
+{% if data_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">브랜드</th>
+      <th scope="col">상호명</th>
+      <th scope="col">평균매출액</th>
+      <th scope="col">초기 투자비용 합계</th>
+      <th scope="col">평가</th>
+      <th scope="col">기준연도</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in data_list %}
+    <tr>
+      <th scope="row">{{ user.브랜드 }}</th>
+      <td>{{ user.상호 }}</td>
+      <td>{{ user.평균매출액 }}</td>
+      <td>{{ user.초기투자비용합계 }}</td>
+      <td>{{ user.평가 }}</td>
+      <td>{{ user.기준연도 }}</td>
+
+      <td>
+        <a class="btn btn-secondary", href='/brand{{ user.브랜드 }}'>
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+  </table>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'basic.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+<h1><p class="text-dark">Search the Company</p></h1>
+{% endblock %}
+
+{% block lead %}
+<h4><p class="text-muted">관심 있는 프랜차이즈 회사를 검색해보세요.</p></h4>
+<p class="m-4 h5 text-warning"> - </p>
+<h5><p class="text-dark">2020년 기준 프랜차이즈 본사 검색</p></h5>
+<p class="font-weight-light alert-secondary">예시 🔍 더본코리아 -> 더본 ⭕️, 코리아 ⭕️, 홍콩반점 ❌</p>
+<a href="https://franchise.ftc.go.kr/main/index.do"><p class="text-muted">* 데이터 출처 : 공정거래위원회 가맹사업거래</p></a>
+
+{% endblock %}
+
+{% block main_body %}
+<form method="GET" action="/company">
+  <input name="companyname" style="margin-bottom:10px" class="form-control" type="text" placeholder="원하는 회사를 입력하세요.">
+  <input type="submit" class="btn btn-warning" value="Search" />
+</form>
+
+<p class="m-5 h3 text-danger"> </p>
+<p class="text-justify text-black-50 text-right">단위 : 천원&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>
+{% if data_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">상호명</th>
+      <th scope="col">브랜드</th>
+      <th scope="col">가맹점수</th>
+      <th scope="col">매출액</th>
+      <th scope="col">영업이익</th>
+      <th scope="col">평가</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in data_list %}
+    <tr>
+      <th scope="row">{{ user.상호 }}</th>
+      <td>{{ user.브랜드 }}</td>
+      <td>{{ user.가맹점수 }}</td>
+      <td>{{ user.매출액}}</td>
+      <td>{{ user.영업이익}}</td>
+      <td>{{ user.평가 }}</td>
+
+      <td>
+        <a class="btn btn-secondary", href='/company/{{ user.상호 }}/{{ user.브랜드 }}'>
+          ADD
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+
+  </table>
+{% endif %}
+
+{% endblock %}
